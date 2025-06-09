@@ -11,6 +11,7 @@ func NewRouter() *chi.Mux {
 
 	r.Get("/health-check", handlers.HealthCheck)
 	r.Post("/register", handlers.Register)
+	r.Post("/login", handlers.Login)
 	
 	return r
 }

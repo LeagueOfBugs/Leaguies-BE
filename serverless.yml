@@ -1,0 +1,23 @@
+service: leaguies-backend
+
+frameworkVersion: '>=4.0.0'
+
+
+provider:
+  name: aws
+  runtime: provided.al2
+  region: us-east-2
+  stage: dev
+
+functions:
+  api:
+    handler: bootstrap
+    events:
+      - httpApi:
+          path: /{proxy+}
+          method: ANY
+
+package:
+  patterns:
+    - '!./**'
+    - bootstrap

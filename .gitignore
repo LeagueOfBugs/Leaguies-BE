@@ -1,0 +1,30 @@
+# Binaries
+/bin/
+/bootstrap
+
+# Build output
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test binaries
+*.test
+
+# Dependency directories (if not using Go modules)
+vendor/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# IDE/editor-specific
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+
+# Lambda artifacts
+*.zip

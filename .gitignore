@@ -28,3 +28,7 @@ Thumbs.db
 
 # Lambda artifacts
 *.zip
+
+#Environment
+.env
+*.env

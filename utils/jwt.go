@@ -1,13 +1,11 @@
-// internal/utils/jwt.go
 package utils
 
 import (
+	"errors"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
 )
-
-var jwtKey = []byte("your_secret_key_here") // replace with env var in production
 
 type Claims struct {
 	UserID uint `json:"user_id"`
@@ -15,16 +13,29 @@ type Claims struct {
 }
 
 func GenerateJWT(userID uint) (string, error) {
-	expirationTime := time.Now().Add(24 * time.Hour)
-
+	expiration := time.Now().Add(24 * time.Hour)
 	claims := &Claims{
 		UserID: userID,
 		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(expirationTime),
+			ExpiresAt: jwt.NewNumericDate(expiration),
 		},
 	}
-
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	return token.SignedString(GetJWTSecret())
+}
 
-	return token.SignedString(jwtKey)
+func ParseToken(tokenStr string) (*Claims, error) {
+	token, err := jwt.ParseWithClaims(tokenStr, &Claims{}, func(token *jwt.Token) (interface{}, error) {
+		return GetJWTSecret(), nil
+	})
+
+	if err != nil || !token.Valid {
+		return nil, errors.New("invalid token")
+	}
+	
+	claims, ok := token.Claims.(*Claims)
+	if !ok {
+		return nil, errors.New("invalid claims")
+	}
+	return claims, nil
 }

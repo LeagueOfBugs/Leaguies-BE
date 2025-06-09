@@ -91,7 +91,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-2-15ad69c8-4fe0",
-          "S3Key": "serverless/leaguies-backend/dev/1749499918431-2025-06-09T20:11:58.431Z/leaguies-backend.zip"
+          "S3Key": "serverless/leaguies-backend/dev/1749506431781-2025-06-09T22:00:31.781Z/leaguies-backend.zip"
         },
         "Handler": "bootstrap",
         "Runtime": "provided.al2",
@@ -109,14 +109,14 @@
         "ApiLogGroup"
       ]
     },
-    "ApiLambdaVersionemmRS5MX56tBxbWDbeVd8B9CZqHBhAlNo0GQLrRA": {
+    "ApiLambdaVersioncMo2QgYMvvNZVfw6V3nBcla7yHfpaIuCUzTcqOFvPMU": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "ApiLambdaFunction"
         },
-        "CodeSha256": "D4gRf3Lgsf0vwjv5oDY6gxGB3ufFMTHVZt+a/P5tHRw="
+        "CodeSha256": "dnZSO0QuczoayL1agqwXX84wZuwqShI560C6DtozJu4="
       }
     },
     "HttpApi": {
@@ -225,7 +225,7 @@
     "ApiLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "ApiLambdaVersionemmRS5MX56tBxbWDbeVd8B9CZqHBhAlNo0GQLrRA"
+        "Ref": "ApiLambdaVersioncMo2QgYMvvNZVfw6V3nBcla7yHfpaIuCUzTcqOFvPMU"
       },
       "Export": {
         "Name": "sls-leaguies-backend-dev-ApiLambdaFunctionQualifiedArn"

@@ -8,6 +8,7 @@ import (
 	"leaguies_backend/internal/db"
 	"leaguies_backend/models"
 	"leaguies_backend/utils"
+
 	"gorm.io/gorm"
 )
 
@@ -39,7 +40,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Check password
-	if !utils.CheckPasswordHash( user.Password, req.Password) {
+	if !utils.CheckPasswordHash(user.Password, req.Password) {
 		http.Error(w, "Invalid email or password 2", http.StatusUnauthorized)
 		return
 	}

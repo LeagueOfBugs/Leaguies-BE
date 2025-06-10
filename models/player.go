@@ -7,7 +7,7 @@ import (
 )
 
 type Player struct {
-	PlayerID  uint   `gorm:"primaryKey"`
+	ID  uint   `gorm:"primaryKey"`
 	Gender    string `gorm:"type:varchar(10)"`
 	Position  string `gorm:"type:varchar(50)"`
 	UserID    uint   `gorm:"not null;unique"`

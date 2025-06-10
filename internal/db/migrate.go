@@ -12,6 +12,11 @@ func Migrate(db *gorm.DB) {
         &models.User{},
         &models.Role{},
         &models.Player{},
+        &models.League{},
+        &models.Season{},
+        &models.Team{},
+        &models.Match{},
+        
 		// add other models here
     )
     if err != nil {

@@ -41,6 +41,15 @@ func NewRouter() *chi.Mux {
 		// r.Route("/season", func(r chi.Router) {
 		// 	r.Post("/create", handlers.CreateSeason)
 		// })
+
+		// team routes
+		r.Route("/team", func(r chi.Router) {
+			r.Post("/create", handlers.CreateTeam)
+			r.Get("/", handlers.ListTeams)
+			r.Get("/{id}", handlers.GetTeam)
+			r.Put("/{id}/update", handlers.UpdateTeam)
+			r.Delete("/{id}/delete", handlers.DeleteTeam)
+		})
 	})
 
 	return r

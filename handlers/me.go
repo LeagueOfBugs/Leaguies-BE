@@ -17,7 +17,7 @@ func Me(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var user models.User
-	if err := db.DB.First(&user, userID).Error; err != nil {
+	if err := db.DB.Preload("Roles").First(&user, userID).Error; err != nil {
 		http.Error(w, "User not found", http.StatusNotFound)
 		return
 	}

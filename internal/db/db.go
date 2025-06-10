@@ -34,4 +34,5 @@ func Connect() {
 
 	DB = db
 	Migrate(DB)
+	SeedRoles()
 }

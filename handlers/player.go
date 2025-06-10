@@ -25,6 +25,6 @@ func GetPlayer(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Player not found", http.StatusNotFound)
 		return
 	}
-
+	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(player)
 }

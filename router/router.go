@@ -26,6 +26,10 @@ func NewRouter() *chi.Mux {
 		// players routes
 		r.Route("/player", func(r chi.Router) {
 			r.Get("/{id}", handlers.GetPlayer)
+			r.Get("/", handlers.ListPlayers)
+			r.Post("/create", handlers.CreatePlayer)
+			r.Put("/{id}/update", handlers.UpdatePlayer)
+			r.Delete("/{id}/delete", handlers.DeletePlayer)
 		})
 
 		// leagues routes
@@ -38,17 +42,29 @@ func NewRouter() *chi.Mux {
 		})
 
 		// season routes
-		// r.Route("/season", func(r chi.Router) {
-		// 	r.Post("/create", handlers.CreateSeason)
-		// })
+		r.Route("/season", func(r chi.Router) {
+			r.Post("/create", handlers.CreateSeason)
+			r.Get("/", handlers.ListSeason)
+			r.Get("/{id}", handlers.GetSeason)
+			r.Put("/{id}", handlers.UpdateSeason)
+			r.Delete("/{id}", handlers.DeleteSeason)
+		})
 
 		// team routes
 		r.Route("/team", func(r chi.Router) {
 			r.Post("/create", handlers.CreateTeam)
 			r.Get("/", handlers.ListTeams)
 			r.Get("/{id}", handlers.GetTeam)
-			r.Put("/{id}/update", handlers.UpdateTeam)
-			r.Delete("/{id}/delete", handlers.DeleteTeam)
+			r.Put("/{id}", handlers.UpdateTeam)
+			r.Delete("/{id}", handlers.DeleteTeam)
+		})
+
+		r.Route("/match", func(r chi.Router) {
+			r.Post("/create", handlers.CreateMatch)
+			r.Get("/", handlers.ListMatches)
+			r.Get("/{id}", handlers.GetMatch)
+			r.Put("/{id}", handlers.UpdateMatch)
+			r.Delete("/{id}", handlers.DeleteMatch)
 		})
 	})
 

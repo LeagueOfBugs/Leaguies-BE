@@ -7,7 +7,7 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
-func NewRouter() *chi.Mux {
+func NewRouter(h *handlers.Handler) *chi.Mux {
 	r := chi.NewRouter()
 
 	r.Get("/health-check", handlers.HealthCheck)
@@ -36,7 +36,7 @@ func NewRouter() *chi.Mux {
 		r.Route("/league", func(r chi.Router) {
 			r.Get("/", handlers.ListLeagues)
 			r.Get("/{id}", handlers.GetLeague)
-			r.Post("/create", handlers.CreateLeague)
+			r.Post("/create", h.League.Create)
 			r.Put("/{id}/update", handlers.UpdateLeague)
 			r.Delete("/{id}/delete", handlers.DeleteLeague)
 		})

@@ -2,9 +2,9 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ master ]
+    branches: ["*"]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build-and-test:
@@ -23,5 +23,4 @@ jobs:
         run: go mod tidy
 
       - name: Run tests
-        run: go test ./...
-
+        run: go test -v -failfast -coverprofile=coverage.out ./...

@@ -9,9 +9,28 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
-func CreateLeague(w http.ResponseWriter, r *http.Request) {
-	var req CreateLeagueRequest
+type LeagueHandler struct {
+	Store db.LeagueStore
+}
 
+type CreateLeagueRequest struct {
+	Name    string `json:"name"`
+	SportId uint   `json:"sport_id"`
+}
+
+type UpdateLeagueRequest struct {
+	Name    *string `json:"name"`
+	SportId *uint   `json:"sport_id"`
+}
+
+func newLeagueHandler(store db.LeagueStore) *LeagueHandler {
+	return &LeagueHandler{
+		Store: store,
+	}
+}
+
+func (h *LeagueHandler) Create(w http.ResponseWriter, r *http.Request) {
+	var req CreateLeagueRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, "Invalid request body", http.StatusBadRequest)
 		return
@@ -22,7 +41,7 @@ func CreateLeague(w http.ResponseWriter, r *http.Request) {
 		SportID: req.SportId,
 	}
 
-	if err := db.DB.Create(&league).Error; err != nil {
+	if err := h.Store.Create(&league); err != nil {
 		http.Error(w, "Failed to create league", http.StatusInternalServerError)
 		return
 	}
@@ -31,7 +50,7 @@ func CreateLeague(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(league)
 }
 
-func UpdateLeague(w http.ResponseWriter, r *http.Request) {
+func (h *LeagueHandler) Update(w http.ResponseWriter, r *http.Request) {
 	// get id param
 	leagueIdParam := chi.URLParam(r, "id")
 	if leagueIdParam == "" {
@@ -72,7 +91,7 @@ func UpdateLeague(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(league)
 }
 
-func DeleteLeague(w http.ResponseWriter, r *http.Request) {
+func (h *LeagueHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	leagueIdParam := chi.URLParam(r, "id")
 	if leagueIdParam == "" {
 		http.Error(w, "Invalid league ID", http.StatusBadRequest)
@@ -94,7 +113,7 @@ func DeleteLeague(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(league)
 }
 
-func GetLeague(w http.ResponseWriter, r *http.Request) {
+func (h *LeagueHandler) GetByID(w http.ResponseWriter, r *http.Request) {
 	leagueIdParam := chi.URLParam(r, "id")
 	if leagueIdParam == "" {
 		http.Error(w, "Invalid league ID", http.StatusBadRequest)
@@ -111,7 +130,7 @@ func GetLeague(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(league)
 }
 
-func ListLeagues(w http.ResponseWriter, r *http.Request) {
+func (h *LeagueHandler) List(w http.ResponseWriter, r *http.Request) {
 	var leagues []models.League
 	if err := db.DB.Find(&leagues).Error; err != nil {
 		http.Error(w, "Failed to fetch leagues", http.StatusInternalServerError)

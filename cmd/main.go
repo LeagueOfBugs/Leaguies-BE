@@ -1,6 +1,7 @@
 package main
 
 import (
+	"leaguies_backend/handlers"
 	"leaguies_backend/internal/config"
 	"leaguies_backend/internal/db"
 	"leaguies_backend/router"
@@ -14,7 +15,10 @@ var adapter *chiadapter.ChiLambdaV2
 func init() {
 	config.LoadEnv()
 	db.Connect()
-	r := router.NewRouter()
+
+	store := db.NewGormStore(db.DB)
+	h := handlers.NewHandler(store)
+	r := router.NewRouter(h)
 	adapter = chiadapter.NewV2(r)
 }
 

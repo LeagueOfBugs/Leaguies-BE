@@ -1,13 +1,19 @@
 package handlers
 
-import "leaguies_backend/internal/db"
+import (
+	"leaguies_backend/handlers/league"
+	"leaguies_backend/handlers/season"
+	"leaguies_backend/internal/db"
+)
 
 type Handler struct {
-	League *LeagueHandler
+	League *league.LeagueHandler
+	Season *season.SeasonHandler
 }
 
 func NewHandler(store *db.Store) *Handler {
 	return &Handler{
-		League : newLeagueHandler(store.Leagues),
+		League: league.NewLeagueHandler(store.Leagues),
+		Season: season.NewSeasonHandler(store.Seasons),
 	}
 }

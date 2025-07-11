@@ -16,7 +16,7 @@ func init() {
 	config.LoadEnv()
 	db.Connect()
 
-	store := db.NewGormStore(db.DB)
+	store := db.NewStore(db.DB)
 	h := handlers.NewHandler(store)
 	r := router.NewRouter(h)
 	adapter = chiadapter.NewV2(r)

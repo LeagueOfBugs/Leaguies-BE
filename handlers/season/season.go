@@ -1,28 +1,27 @@
-package handlers
+package season
 
 import (
 	"encoding/json"
 	"leaguies_backend/internal/db"
 	"leaguies_backend/models"
 	"net/http"
-	"time"
 
 	"github.com/go-chi/chi/v5"
 )
 
-type CreateSeasonRequest struct {
-	Name      string    `json:"name"`
-	LeagueID  uint      `json:"league_id"`
-	StartDate time.Time `json:"start_date"`
-	EndDate   time.Time `json:"end_date"`
-}
+// type CreateSeasonRequest struct {
+// 	Name      string    `json:"name"`
+// 	LeagueID  uint      `json:"league_id"`
+// 	StartDate time.Time `json:"start_date"`
+// 	EndDate   time.Time `json:"end_date"`
+// }
 
-type UpdateSeasonRequest struct {
-	Name      *string    `json:"name"`
-	LeagueID  *uint      `json:"league_id"`
-	StartDate *time.Time `json:"start_date"`
-	EndDate   *time.Time `json:"end_date"`
-}
+// type UpdateSeasonRequest struct {
+// 	Name      *string    `json:"name"`
+// 	LeagueID  *uint      `json:"league_id"`
+// 	StartDate *time.Time `json:"start_date"`
+// 	EndDate   *time.Time `json:"end_date"`
+// }
 
 func CreateSeason(w http.ResponseWriter, r *http.Request) {
 	var req CreateSeasonRequest

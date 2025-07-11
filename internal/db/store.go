@@ -1,6 +1,18 @@
 package db
 
+import "gorm.io/gorm"
+import "leaguies_backend/internal/db/league"
+import "leaguies_backend/internal/db/season"
 type Store struct {
-	Leagues LeagueStore
+	Leagues league.LeagueStoreInterface
+	Seasons season.SeasonStoreInterface
 	// Add: Players PlayerStore, Matches MatchStore, etc.
+}
+
+
+func NewStore(db *gorm.DB) *Store {
+	return &Store{
+		Leagues: &league.LeagueStore{DB: db},
+		Seasons: &season.SeasonStore{DB: db},
+	}
 }

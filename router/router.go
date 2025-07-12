@@ -60,6 +60,14 @@ func NewRouter(h *handlers.Handler) *chi.Mux {
 		})
 
 		r.Route("/match", func(r chi.Router) {
+			r.Post("/create", h.Match.Create)
+			r.Get("/", h.Match.List)
+			r.Get("/{id}", h.Match.GetByID)
+			r.Put("/{id}", h.Match.Update)
+			r.Delete("/{id}", h.Match.Delete)
+		})
+
+		r.Route("/invite", func(r chi.Router) {
 			r.Post("/create", handlers.CreateMatch)
 			r.Get("/", handlers.ListMatches)
 			r.Get("/{id}", handlers.GetMatch)

@@ -52,11 +52,11 @@ func NewRouter(h *handlers.Handler) *chi.Mux {
 
 		// team routes
 		r.Route("/team", func(r chi.Router) {
-			r.Post("/create", handlers.CreateTeam)
-			r.Get("/", handlers.ListTeams)
-			r.Get("/{id}", handlers.GetTeam)
-			r.Put("/{id}", handlers.UpdateTeam)
-			r.Delete("/{id}", handlers.DeleteTeam)
+			r.Post("/create", h.Team.Create)
+			r.Get("/", h.Team.List)
+			r.Get("/{id}", h.Team.GetByID)
+			r.Put("/{id}", h.Team.Update)
+			r.Delete("/{id}", h.Team.Delete)
 		})
 
 		r.Route("/match", func(r chi.Router) {

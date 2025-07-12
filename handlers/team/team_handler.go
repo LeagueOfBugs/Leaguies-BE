@@ -1,14 +1,16 @@
-package handlers
+package team
 
 import (
 	"encoding/json"
-	"leaguies_backend/internal/db"
+	"leaguies_backend/internal/db/team"
+	"leaguies_backend/internal/utils"
 	"leaguies_backend/models"
 	"net/http"
-
-	"github.com/go-chi/chi/v5"
 )
 
+type TeamHandler struct {
+	store team.TeamStoreInterface
+}
 type CreateTeamRequest struct {
 	Name     string `json:"name"`
 	LeagueId *uint  `json:"league_id"`
@@ -19,7 +21,13 @@ type UpdateTeamRequest struct {
 	LeagueId *uint   `json:"league_id"`
 }
 
-func CreateTeam(w http.ResponseWriter, r *http.Request) {
+func NewTeamHandler(store team.TeamStoreInterface) *TeamHandler {
+	return &TeamHandler{
+		store: store,
+	}
+}
+
+func (h *TeamHandler) Create(w http.ResponseWriter, r *http.Request) {
 	var req CreateTeamRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, "Invalid request body", http.StatusBadRequest)
@@ -31,7 +39,7 @@ func CreateTeam(w http.ResponseWriter, r *http.Request) {
 		LeagueId: req.LeagueId,
 	}
 
-	if err := db.DB.Create(&team).Error; err != nil {
+	if err := h.store.Create(&team); err != nil {
 		http.Error(w, "Failed to create team", http.StatusInternalServerError)
 		return
 	}
@@ -40,11 +48,15 @@ func CreateTeam(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(team)
 }
 
-func UpdateTeam(w http.ResponseWriter, r *http.Request) {
-	id := chi.URLParam(r, "id")
+func (h *TeamHandler) Update(w http.ResponseWriter, r *http.Request) {
+	uint, error := utils.ParseUintParam(r, "id")
+	if error != nil {
+		http.Error(w, error.Error(), http.StatusBadRequest)
+		return
+	}
 
-	var team models.Team
-	if err := db.DB.First(&team, id).Error; err != nil {
+	team, err := h.store.GetByID(uint)
+	if err != nil {
 		http.Error(w, "Team not found", http.StatusNotFound)
 		return
 	}
@@ -61,7 +73,7 @@ func UpdateTeam(w http.ResponseWriter, r *http.Request) {
 
 	team.LeagueId = req.LeagueId
 
-	if err := db.DB.Save(&team).Error; err != nil {
+	if err := h.store.Update(team); err != nil {
 		http.Error(w, "Failed to update team", http.StatusInternalServerError)
 		return
 	}
@@ -70,9 +82,20 @@ func UpdateTeam(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(team)
 }
 
-func DeleteTeam(w http.ResponseWriter, r *http.Request) {
-	id := chi.URLParam(r, "id")
-	if err := db.DB.Delete(&models.Team{}, id).Error; err != nil {
+func (h *TeamHandler) Delete(w http.ResponseWriter, r *http.Request) {
+	uint, error := utils.ParseUintParam(r, "id")
+	if error != nil {
+		http.Error(w, error.Error(), http.StatusBadRequest)
+		return
+	}
+
+	team, err := h.store.GetByID(uint)
+	if err != nil {
+		http.Error(w, "Team not found", http.StatusNotFound)
+		return
+	}
+
+	if err := h.store.Delete(team); err != nil {
 		http.Error(w, "Failed to delete team", http.StatusInternalServerError)
 		return
 	}
@@ -80,24 +103,30 @@ func DeleteTeam(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-func GetTeam(w http.ResponseWriter, r *http.Request) {
-	id := chi.URLParam(r, "id")
-	var team models.Team
-	if err := db.DB.First(&team, id).Error; err != nil {
+func (h *TeamHandler) GetByID(w http.ResponseWriter, r *http.Request) {
+	uint, error := utils.ParseUintParam(r, "id")
+	if error != nil {
+		http.Error(w, error.Error(), http.StatusBadRequest)
+		return
+	}
+
+	team, err := h.store.GetByID(uint)
+	if err != nil {
 		http.Error(w, "Team not found", http.StatusNotFound)
 		return
 	}
-	w.WriteHeader(http.StatusCreated)
+
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(team)
 }
 
-func ListTeams(w http.ResponseWriter, r *http.Request) {
-	var teams []models.Team
-	if err := db.DB.Find(&teams).Error; err != nil {
+func (h *TeamHandler) List(w http.ResponseWriter, r *http.Request) {
+	teams, err := h.store.List()
+	if err != nil {
 		http.Error(w, "Failed to fetch teams", http.StatusInternalServerError)
 		return
 	}
 
-	w.WriteHeader(http.StatusCreated)
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(teams)
 }

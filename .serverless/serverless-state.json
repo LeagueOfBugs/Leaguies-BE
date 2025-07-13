@@ -103,7 +103,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-2-15ad69c8-4fe0",
-                "S3Key": "serverless/leaguies-backend/dev/1752364360001-2025-07-12T23:52:40.001Z/leaguies-backend.zip"
+                "S3Key": "serverless/leaguies-backend/dev/1752416697076-2025-07-13T14:24:57.076Z/leaguies-backend.zip"
               },
               "Handler": "bootstrap",
               "Runtime": "provided.al2",
@@ -121,14 +121,14 @@
               "ApiLogGroup"
             ]
           },
-          "ApiLambdaVersionxldsD5oorKHqGLUqAtEC8IcNT0DUUJDBHp0DaQMYc": {
+          "ApiLambdaVersion9cpoGbrBVStRYZqTWakl82tUAD7o8QzZMNKbhQI": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ApiLambdaFunction"
               },
-              "CodeSha256": "3cPzDsiC3UOSgO11nlKCDZgsPAKRZxcJDtLlS0IjWl0="
+              "CodeSha256": "IuF8ewW3SCAJ8cq2PvcghQaHI+FwrUyqHDQzCCrPhio="
             }
           },
           "HttpApi": {
@@ -234,7 +234,7 @@
           "ApiLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ApiLambdaVersionxldsD5oorKHqGLUqAtEC8IcNT0DUUJDBHp0DaQMYc"
+              "Ref": "ApiLambdaVersion9cpoGbrBVStRYZqTWakl82tUAD7o8QzZMNKbhQI"
             },
             "Export": {
               "Name": "sls-leaguies-backend-dev-ApiLambdaFunctionQualifiedArn"
@@ -298,7 +298,7 @@
         "timeout": 6,
         "runtime": "provided.al2",
         "vpc": {},
-        "versionLogicalId": "ApiLambdaVersionxldsD5oorKHqGLUqAtEC8IcNT0DUUJDBHp0DaQMYc"
+        "versionLogicalId": "ApiLambdaVersion9cpoGbrBVStRYZqTWakl82tUAD7o8QzZMNKbhQI"
       }
     },
     "configValidationMode": "warn",
@@ -320,7 +320,7 @@
         "artifactsS3KeyDirname": "serverless/leaguies-backend/dev/code-artifacts",
         "deploymentBucket": "serverless-framework-deployments-us-east-2-15ad69c8-4fe0",
         "artifact": "/Users/andres/leaguies_workspace/leaguies_backend/.serverless/leaguies-backend.zip",
-        "artifactDirectoryName": "serverless/leaguies-backend/dev/1752364360001-2025-07-12T23:52:40.001Z"
+        "artifactDirectoryName": "serverless/leaguies-backend/dev/1752416697076-2025-07-13T14:24:57.076Z"
       }
     },
     "appId": null,
@@ -329,7 +329,7 @@
     "artifact": "/Users/andres/leaguies_workspace/leaguies_backend/.serverless/leaguies-backend.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/leaguies-backend/dev/1752364360001-2025-07-12T23:52:40.001Z",
+    "artifactDirectoryName": "serverless/leaguies-backend/dev/1752416697076-2025-07-13T14:24:57.076Z",
     "artifact": "leaguies-backend.zip"
   }
 }

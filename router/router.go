@@ -68,11 +68,10 @@ func NewRouter(h *handlers.Handler) *chi.Mux {
 		})
 
 		r.Route("/invite", func(r chi.Router) {
-			r.Post("/create", handlers.CreateMatch)
-			r.Get("/", handlers.ListMatches)
-			r.Get("/{id}", handlers.GetMatch)
-			r.Put("/{id}", handlers.UpdateMatch)
-			r.Delete("/{id}", handlers.DeleteMatch)
+			r.Post("/create", h.Invite.Create)
+			r.Get("/", h.Invite.List)
+			r.Get("/{id}", h.Invite.GetByID)
+			r.Delete("/{id}", h.Invite.Delete)
 		})
 	})
 

@@ -6,6 +6,7 @@ import (
 	"leaguies_backend/handlers/match"
 	"leaguies_backend/handlers/season"
 	"leaguies_backend/handlers/team"
+	"leaguies_backend/handlers/player"
 	"leaguies_backend/internal/db"
 )
 
@@ -15,6 +16,7 @@ type Handler struct {
 	Team  *team.TeamHandler
 	Match *match.MatchHandler
 	Invite *invite.InviteHandler
+	Player *player.PlayerHandler
 }
 
 func NewHandler(store *db.Store) *Handler {
@@ -24,5 +26,6 @@ func NewHandler(store *db.Store) *Handler {
 		Team:  team.NewTeamHandler(store.Teams),
 		Match: match.NewMatchHandler(store.Matches, store.Teams),
 		Invite: invite.NewInviteHandler(store.Invites),
+		Player: player.NewPlayerHandler(store.Players),
 	}
 }

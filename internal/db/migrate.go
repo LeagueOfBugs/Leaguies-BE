@@ -18,7 +18,6 @@ func Migrate(db *gorm.DB) {
 		&models.Team{},
 		&models.Match{},
 		&models.Invite{},
-
 		// add other models here
 	)
 	if err != nil {
